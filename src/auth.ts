@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Auth, onAuthStateChanged, User } from "firebase/auth";
+import { useEffect, useState } from "react"
+import { Auth, onAuthStateChanged, User } from "firebase/auth"
 
 let _auth: Auth;
 let _verifyIdToken: (user: User) => Promise<boolean>;
