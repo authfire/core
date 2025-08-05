@@ -1,1 +1,2 @@
-export { useCurrentUser } from "./auth";
+export { useCurrentUser } from "./auth"
+export * from "@authfire/jsfire"
