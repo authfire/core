@@ -1,8 +1,7 @@
 import { Auth, User } from "firebase/auth";
-declare const setAuth: (auth: Auth) => void;
-declare const setVerifyIdToken: (verifyIdToken: (user: User) => Promise<boolean>) => void;
-declare const useCurrentUser: () => {
+import { Analytics } from "firebase/analytics";
+declare const useCurrentUser: (auth: Auth, idTokenVerificationUrl?: string, appCheckToken?: string, analytics?: Analytics) => {
     user: User | null;
     idTokenVerified: boolean | null;
 };
-export { useCurrentUser, setAuth, setVerifyIdToken };
+export { useCurrentUser };

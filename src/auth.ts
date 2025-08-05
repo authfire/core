@@ -1,22 +1,13 @@
 import { useEffect, useState } from "react"
 import { Auth, onAuthStateChanged, User } from "firebase/auth"
+import { verifyIdToken } from "@authfire/jsfire";
+import { Analytics } from "firebase/analytics";
 
-let _auth: Auth;
-let _verifyIdToken: (user: User) => Promise<boolean>;
-
-const setAuth = (auth: Auth) => {
-  _auth = auth;
-}
-
-const setVerifyIdToken = (verifyIdToken: (user: User) => Promise<boolean>) => {
-  _verifyIdToken = verifyIdToken;
-}
-
-const useCurrentUser = () => {
-  const [user, setUser] = useState<User | null>(_auth.currentUser);
+const useCurrentUser = (auth: Auth, idTokenVerificationUrl?: string, appCheckToken?: string, analytics?: Analytics) => {
+  const [user, setUser] = useState<User | null>(auth.currentUser);
   const [idTokenVerified, setIdTokenVerified] = useState<boolean | null>(null);
 
-  onAuthStateChanged(_auth, async (newUser) => {
+  onAuthStateChanged(auth, async (newUser) => {
     if (newUser?.uid === user?.uid) {
       return; // No change in user
     }
@@ -25,15 +16,17 @@ const useCurrentUser = () => {
   });
 
   useEffect(() => {
-    if (!user) {
+    if (!user || !idTokenVerificationUrl) {
       setIdTokenVerified(null);
       return;
     }
 
-    _verifyIdToken(user).then(setIdTokenVerified).catch((error) => {
-      console.error("Error checking sign-in verification:", error);
-      setIdTokenVerified(false);
-    });
+    verifyIdToken(user, idTokenVerificationUrl, appCheckToken, analytics)
+      .then(setIdTokenVerified).catch((error) => {
+        console.error("Error checking sign-in verification:", error);
+        setIdTokenVerified(false);
+      }
+    );
   }, [user]);
 
   return {
@@ -42,4 +35,4 @@ const useCurrentUser = () => {
   };
 }
 
-export { useCurrentUser, setAuth, setVerifyIdToken }
+export { useCurrentUser }

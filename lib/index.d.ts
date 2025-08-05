@@ -1,1 +1,1 @@
-export { useCurrentUser, setAuth, setVerifyIdToken, } from "./auth";
+export { useCurrentUser } from "./auth";
