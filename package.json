@@ -22,7 +22,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@authfire/jsfire": "^1.1.5"
+    "@authfire/jsfire": "^1.1.6"
   },
   "peerDependencies": {
     "firebase": "^12.0.0"
