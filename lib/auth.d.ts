@@ -1,6 +1,5 @@
 import { Auth, User } from "firebase/auth";
-import { Analytics } from "firebase/analytics";
-declare const useCurrentUser: (auth: Auth, analytics?: Analytics) => {
+declare const useCurrentUser: (auth: Auth) => {
     user: User | null;
     idTokenVerified: boolean | null;
 };
