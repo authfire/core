@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
 import { Auth, onAuthStateChanged, User } from "firebase/auth"
-import { Analytics } from "firebase/analytics";
 import { idTokenVerificationUrl, verifyIdToken } from "@authfire/jsfire";
 
-const useCurrentUser = (auth: Auth, analytics?: Analytics) => {
+const useCurrentUser = (auth: Auth) => {
   const [user, setUser] = useState<User | null>(auth.currentUser);
   const [idTokenVerified, setIdTokenVerified] = useState<boolean | null>(null);
 
@@ -21,7 +20,7 @@ const useCurrentUser = (auth: Auth, analytics?: Analytics) => {
       return;
     }
 
-    verifyIdToken(user, analytics)
+    verifyIdToken(user)
       .then(setIdTokenVerified).catch((error) => {
         console.error("Error checking sign-in verification:", error);
         setIdTokenVerified(false);
