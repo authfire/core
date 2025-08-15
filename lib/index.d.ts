@@ -1,2 +1,2 @@
-export { useCurrentUser } from "./auth";
-export * from "@authfire/jsfire";
+export * from "./auth";
+export { initialize } from "./const";

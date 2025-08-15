@@ -1,0 +1,32 @@
+import { FirebaseApp } from "firebase/app";
+import { Auth } from "firebase/auth";
+import { AppCheck } from "firebase/app-check";
+import { Firestore } from "firebase/firestore";
+import { FirebaseStorage } from "firebase/storage";
+import { Analytics } from "firebase/analytics";
+type Firebase = {
+    app: FirebaseApp;
+    appCheck: AppCheck;
+    auth: Auth;
+    firestore: Firestore;
+    storage: FirebaseStorage;
+    analytics: Analytics;
+};
+declare let baseUrl: string;
+declare let idTokenVerificationUrl: string;
+declare let serverTokenUrl: string;
+declare let serverSignOutUrl: string;
+declare let useFirebase: (() => Firebase);
+declare let getAppCheckToken: (() => Promise<string>);
+declare let logEvent: ((eventName: string, eventParams?: Record<string, any>) => void);
+type Options = {
+    baseUrl: string;
+    idTokenVerificationUrl: string;
+    serverTokenUrl: string;
+    serverSignOutUrl: string;
+    useFirebase: () => Firebase;
+    getAppCheckToken: () => Promise<string>;
+    logEvent: (eventName: string, eventParams?: Record<string, any>) => void;
+};
+declare const initialize: (options: Options) => void;
+export { initialize, baseUrl, idTokenVerificationUrl, serverTokenUrl, serverSignOutUrl, getAppCheckToken, logEvent, useFirebase };

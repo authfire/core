@@ -1,6 +1,10 @@
-import { Auth, User } from "firebase/auth";
-declare const useCurrentUser: (auth: Auth) => {
+import { Auth, User, UserCredential } from "firebase/auth";
+declare const verifyIdToken: (user: User) => Promise<boolean>;
+declare const signIn: (callback: () => Promise<UserCredential>) => Promise<UserCredential>;
+declare const signInWithServerToken: (callback: (token: string) => Promise<UserCredential>) => Promise<UserCredential>;
+declare const signOut: (auth: Auth) => Promise<boolean>;
+declare const useCurrentUser: () => {
     user: User | null;
     idTokenVerified: boolean | null;
 };
-export { useCurrentUser };
+export { verifyIdToken, signIn, signInWithServerToken, signOut, useCurrentUser };
