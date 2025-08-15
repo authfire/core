@@ -4,7 +4,7 @@ declare const signIn: (callback: () => Promise<UserCredential>) => Promise<UserC
 declare const signInWithServerToken: (callback: (token: string) => Promise<UserCredential>) => Promise<UserCredential>;
 declare const signOut: (auth: Auth) => Promise<boolean>;
 declare const useCurrentUser: () => {
-    user: User | null;
+    user: User | null | undefined;
     idTokenVerified: boolean | null;
 };
 export { verifyIdToken, signIn, signInWithServerToken, signOut, useCurrentUser };

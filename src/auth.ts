@@ -89,16 +89,20 @@ const signOut = async (auth: Auth) => {
 
 const useCurrentUser = () => {
   const { auth } = useFirebase();
-  const [user, setUser] = useState<User | null>(auth.currentUser);
+  const [user, setUser] = useState<User | null | undefined>(auth?.currentUser);
   const [idTokenVerified, setIdTokenVerified] = useState<boolean | null>(null);
 
-  onAuthStateChanged(auth, async (newUser) => {
-    if (newUser?.uid === user?.uid) {
-      return; // No change in user
-    }
+  useEffect(() => {
+    if (!auth) return;
 
-    setUser(newUser);
-  });
+    onAuthStateChanged(auth, async (newUser) => {
+      if (newUser?.uid === user?.uid) {
+        return; // No change in user
+      }
+
+      setUser(newUser);
+    });
+  }, [auth]);
 
   useEffect(() => {
     if (!user || !idTokenVerificationUrl) {

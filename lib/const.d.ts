@@ -5,12 +5,12 @@ import { Firestore } from "firebase/firestore";
 import { FirebaseStorage } from "firebase/storage";
 import { Analytics } from "firebase/analytics";
 type Firebase = {
-    app: FirebaseApp;
-    appCheck: AppCheck;
-    auth: Auth;
-    firestore: Firestore;
-    storage: FirebaseStorage;
-    analytics: Analytics;
+    app: FirebaseApp | undefined;
+    appCheck: AppCheck | undefined;
+    auth: Auth | undefined;
+    firestore: Firestore | undefined;
+    storage: FirebaseStorage | undefined;
+    analytics: Analytics | undefined;
 };
 declare let baseUrl: string;
 declare let idTokenVerificationUrl: string;
