@@ -88,24 +88,27 @@ const signOut = async (auth: Auth) => {
 };
 
 const useCurrentUser = () => {
-  const { auth } = useFirebase();
-  const [user, setUser] = useState<User | null | undefined>(auth?.currentUser);
+  const { isLoading, auth } = useFirebase();
+  const [isUserLoading, setIsUserLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(auth?.currentUser || null);
   const [idTokenVerified, setIdTokenVerified] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (!auth) return;
+    if (isLoading || !auth) return;
 
-    onAuthStateChanged(auth, async (newUser) => {
+    onAuthStateChanged(auth, (newUser) => {
+      setIsUserLoading(false);
+
       if (newUser?.uid === user?.uid) {
-        return; // No change in user
+        return;
       }
 
       setUser(newUser);
     });
-  }, [auth]);
+  }, [isLoading, auth]);
 
   useEffect(() => {
-    if (!user || !idTokenVerificationUrl) {
+    if (isUserLoading || !user || !idTokenVerificationUrl) {
       setIdTokenVerified(null);
       return;
     }
@@ -114,11 +117,11 @@ const useCurrentUser = () => {
       .then(setIdTokenVerified).catch((error) => {
         console.error("Error checking sign-in verification:", error);
         setIdTokenVerified(false);
-      }
-    );
-  }, [user]);
+      });
+  }, [isUserLoading, user]);
 
   return {
+    isLoading: isLoading || isUserLoading,
     user,
     idTokenVerified,
   };
