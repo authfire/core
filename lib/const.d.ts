@@ -5,6 +5,7 @@ import { Firestore } from "firebase/firestore";
 import { FirebaseStorage } from "firebase/storage";
 import { Analytics } from "firebase/analytics";
 type Firebase = {
+    isLoading: boolean;
     app: FirebaseApp | undefined;
     appCheck: AppCheck | undefined;
     auth: Auth | undefined;
